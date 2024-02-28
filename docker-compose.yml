@@ -1,0 +1,71 @@
+version: '3.5'
+services:
+  webserver-service:
+    container_name: eloca-webserver
+    build:
+      context: ./api
+    image: projeto/eloca-php-fpm:7.4
+    working_dir: /var/www/html/
+    volumes:
+      - ./api:/var/www/html
+    environment:
+      - APP_ENV=local
+    entrypoint: ["/bin/sh", "/usr/local/bin/docker-entrypoint.sh"]
+    depends_on:
+      - db-service
+    links:
+      - db-service
+    restart: on-failure
+    networks:
+      - eloca_network
+
+  webapp-service:
+    container_name: eloca-web
+    build:
+      context: ./webapp
+    user: "node"
+    working_dir: /app
+    volumes:
+      - ./webapp/src:/app/src/
+    ports:
+      - "8081:8080"
+    environment:
+      - NODE_ENV=development
+    networks:
+      - eloca_network
+  db-service:
+   container_name: eloca-db
+   image: mysql:5.7
+   restart: always
+   ports:
+     - "3309:3306"
+   volumes:
+     - ./mysql_data:/var/lib/mysql
+     - ./script:/docker-entrypoint-initdb.d
+   environment:
+     MYSQL_USER: 'usr_eloca'
+     MYSQL_DATABASE: 'db_eloca'
+     MYSQL_ROOT_PASSWORD: 'psw_eloca'
+     MYSQL_PASSWORD: 'db_eloca_test'
+     TZ: 'America/Sao_Paulo'
+   networks:
+     - eloca_network
+    
+  webserver-nginx-service:
+    image: nginx:1.17-alpine
+    container_name: eloca-webserver-nginx
+    working_dir: /var/www/html/
+    volumes:
+      - ./api:/var/www/html
+      - ./api/docker/webserver/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - '8001:80'
+    depends_on:
+      - webserver-service
+    networks:
+      - eloca_network
+
+networks:
+  eloca_network:
+    name: eloca_network
+    driver: bridge

@@ -6,24 +6,9 @@ import Empresa from '../views/empresa/index.vue'
 import EmpresaForm from '../views/empresa/form.vue'
 import EmpresaFormEdit from '../views/empresa/edit.vue'
 
-
-import Vacina from '../views/vacina/index.vue'
-import VacinaForm from '../views/vacina/form.vue'
-import VacinaFormEdit from '../views/vacina/edit.vue'
-
 import Cliente from '../views/cliente/index.vue'
 import ClienteForm from '../views/cliente/form.vue'
 import ClienteFormEdit from '../views/cliente/edit.vue'
-
-
-import Paciente from '../views/paciente/index.vue'
-import PacienteForm from '../views/paciente/form.vue'
-import PacienteFormEdit from '../views/paciente/edit.vue'
-
-import Vacinacao from '../views/vacinacao/index.vue'
-import VacinacaoForm from '../views/vacinacao/form.vue'
-
-
 
 Vue.use(VueRouter)
 
@@ -50,11 +35,6 @@ const routes = [
     component: EmpresaFormEdit,
     meta: {mode: 'edit'}
   },
-  /*{
-    path: '/vacinacao',
-    name: 'vacinacao',
-    component: Vacinacao
-  },*/
   {
     path: '/cliente',
     name: 'cliente',
@@ -72,17 +52,6 @@ const routes = [
     component: ClienteFormEdit,
     meta: {mode: 'edit'}
   },
-  /*{
-    path: '/vacinacao',
-    name: 'vacinacao',
-    component: Vacinacao
-  },
-  {
-    path: '/vacinacao/new',
-    name: 'vacinacao/new',
-    component: VacinacaoForm,
-    meta: {mode: 'create'}
-  },*/
 ]
 
 const router = new VueRouter({

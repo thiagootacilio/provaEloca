@@ -20,7 +20,6 @@
           <v-text-field
             v-model="form.empresa"
             label="empresa"
-            v-mask="'##'"
             :rules="[mxRegras.obrigatorio]"
           />
         </v-col>
@@ -98,6 +97,7 @@
               return;
             }
             atualizar(this.form).then((res) => {
+              console.log('res',res)
               this.form={}
               alert('Atualizado com sucesso!');
               this.$router.push(this.resource);

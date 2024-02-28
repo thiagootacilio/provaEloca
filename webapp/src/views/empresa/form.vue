@@ -20,7 +20,6 @@
           <v-text-field
             v-model="form.empresa"
             label="empresa"
-            v-mask="'##'"
             :rules="[mxRegras.obrigatorio]"
           />
         </v-col>
